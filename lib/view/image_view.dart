@@ -48,7 +48,7 @@ class _ImageViewState extends State<ImageView> {
                       placeholder: (context, url) => Container(
                         color: Color(0xfff5f8fd),
                       ),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fitHeight,
                     ),
             ),
           ),
@@ -99,7 +99,7 @@ class _ImageViewState extends State<ImageView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  "Set Wallpaper",
+                                  "Download",
                                   style: TextStyle(
                                       color: Colors.white70,
                                       fontSize: 15,
@@ -108,13 +108,13 @@ class _ImageViewState extends State<ImageView> {
                                 SizedBox(
                                   height: 1,
                                 ),
-                                Text(
-                                  kIsWeb
-                                      ? "Image will open in new tab to download"
-                                      : "Image will be saved in gallery",
-                                  style: TextStyle(
-                                      fontSize: 8, color: Colors.white70),
-                                ),
+                                // Text(
+                                //   kIsWeb
+                                //       ? "Image will open in new tab to download"
+                                //       : "Image will be saved in gallery",
+                                //   style: TextStyle(
+                                //       fontSize: 8, color: Colors.white70),
+                                // ),
                               ],
                             )),
                       ],
@@ -130,8 +130,8 @@ class _ImageViewState extends State<ImageView> {
                     "Cancel",
                     style: TextStyle(
                         color: Colors.white60,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
                 SizedBox(
@@ -158,10 +158,10 @@ class _ImageViewState extends State<ImageView> {
   _askPermission() async {
     if (Platform.isIOS) {
       /*Map<PermissionGroup, PermissionStatus> permissions =
-          */await PermissionHandler()
-              .requestPermissions([PermissionGroup.photos]);
+          */
+      await PermissionHandler().requestPermissions([PermissionGroup.photos]);
     } else {
-     /* PermissionStatus permission = */await PermissionHandler()
+      /* PermissionStatus permission = */ await PermissionHandler()
           .checkPermissionStatus(PermissionGroup.storage);
     }
   }

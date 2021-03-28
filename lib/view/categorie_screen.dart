@@ -46,7 +46,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: brandName(),
+        title: Text(widget.categorie),
         elevation: 0.0,
         actions: <Widget>[
           Container(
@@ -58,8 +58,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        child: wallPaper(photos, context)
-        ,
+        child: wallPaper(photos, context),
       ),
     );
   }

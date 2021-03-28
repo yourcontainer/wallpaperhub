@@ -5,6 +5,8 @@ import 'package:wallpaper/models/photos_model.dart';
 import 'package:wallpaper/view/image_view.dart';
 
 Widget wallPaper(List<PhotosModel> listPhotos, BuildContext context) {
+  //print('list!!!');
+  //print(listPhotos);
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 16),
     child: GridView.count(
@@ -13,8 +15,8 @@ Widget wallPaper(List<PhotosModel> listPhotos, BuildContext context) {
         physics: ClampingScrollPhysics(),
         shrinkWrap: true,
         padding: const EdgeInsets.all(4.0),
-        mainAxisSpacing: 6.0,
-        crossAxisSpacing: 6.0,
+        mainAxisSpacing: 8.0,
+        crossAxisSpacing: 8.0,
         children: listPhotos.map((PhotosModel photoModel) {
           return GridTile(
               child: GestureDetector(
@@ -23,27 +25,27 @@ Widget wallPaper(List<PhotosModel> listPhotos, BuildContext context) {
                   context,
                   MaterialPageRoute(
                       builder: (context) => ImageView(
-                            imgPath: photoModel.src.portrait,
+                            imgPath: photoModel.url,
                           )));
             },
             child: Hero(
-              tag: photoModel.src.portrait,
+              tag: photoModel.url,
               child: Container(
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
                     child: kIsWeb
                         ? Image.network(
-                            photoModel.src.portrait,
+                            photoModel.url,
                             height: 50,
                             width: 100,
                             fit: BoxFit.cover,
                           )
                         : CachedNetworkImage(
-                            imageUrl: photoModel.src.portrait,
+                            imageUrl: photoModel.url,
                             placeholder: (context, url) => Container(
                                   color: Color(0xfff5f8fd),
                                 ),
-                            fit: BoxFit.cover)),
+                            fit: BoxFit.fitHeight)),
               ),
             ),
           ));
@@ -56,11 +58,11 @@ Widget brandName() {
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[
       Text(
-        "Wallpaper",
+        "World of Tanks",
         style: TextStyle(color: Colors.black87, fontFamily: 'Overpass'),
       ),
       Text(
-        "Hub",
+        " Wallpapers",
         style: TextStyle(color: Colors.blue, fontFamily: 'Overpass'),
       )
     ],

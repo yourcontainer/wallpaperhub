@@ -22,23 +22,20 @@ class _HomeState extends State<Home> {
   int noOfImageToLoad = 30;
   List<PhotosModel> photos = new List();
 
-  getTrendingWallpaper() async {
-    await http.get(
-        "https://api.pexels.com/v1/curated?per_page=$noOfImageToLoad&page=1",
-        headers: {"Authorization": apiKEY}).then((value) {
-      //print(value.body);
+  getTrendingWallpaper() {
+    PhotosModel photosModel = new PhotosModel();
+    photosModel.url =
+        'https://img1.goodfon.ru/wallpaper/nbig/a/85/world-of-tanks-wargaming-net-7539.jpg';
+    photosModel.category = 'USSR';
+    photos.add(photosModel);
 
-      Map<String, dynamic> jsonData = jsonDecode(value.body);
-      jsonData["photos"].forEach((element) {
-        //print(element);
-        PhotosModel photosModel = new PhotosModel();
-        photosModel = PhotosModel.fromMap(element);
-        photos.add(photosModel);
-        //print(photosModel.toString()+ "  "+ photosModel.src.portrait);
-      });
+    photosModel = new PhotosModel();
+    photosModel.url =
+        'https://ru-wotp.wgcdn.co/dcont/fb/image/wallpaper_december2016-strv103b_1024x600_noc_ru.jpg';
+    photosModel.category = 'Sweden';
+    photos.add(photosModel);
 
-      setState(() {});
-    });
+    setState(() {});
   }
 
   TextEditingController searchController = new TextEditingController();
@@ -47,10 +44,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    //getWallpaper();
+    super.initState();
     getTrendingWallpaper();
     categories = getCategories();
-    super.initState();
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -82,68 +78,6 @@ class _HomeState extends State<Home> {
           child: Column(
             children: <Widget>[
               Container(
-                decoration: BoxDecoration(
-                  color: Color(0xfff5f8fd),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 24),
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: TextField(
-                      controller: searchController,
-                      decoration: InputDecoration(
-                          hintText: "search wallpapers",
-                          border: InputBorder.none),
-                    )),
-                    InkWell(
-                        onTap: () {
-                          if (searchController.text != "") {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SearchView(
-                                          search: searchController.text,
-                                        )));
-                          }
-                        },
-                        child: Container(child: Icon(Icons.search)))
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Made By ",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12,
-                        fontFamily: 'Overpass'),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _launchURL("https://www.linkedin.com/in/lamsanskar/");
-                    },
-                    child: Container(
-                        child: Text(
-                      "Sanskar Tiwari",
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 12,
-                          fontFamily: 'Overpass'),
-                    )),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Container(
                 height: 80,
                 child: ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 24),
@@ -159,34 +93,6 @@ class _HomeState extends State<Home> {
                     }),
               ),
               wallPaper(photos, context),
-              SizedBox(
-                height: 24,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "Photos provided By ",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12,
-                        fontFamily: 'Overpass'),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      _launchURL("https://www.pexels.com/");
-                    },
-                    child: Container(
-                        child: Text(
-                      "Pexels",
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 12,
-                          fontFamily: 'Overpass'),
-                    )),
-                  )
-                ],
-              ),
               SizedBox(
                 height: 24,
               ),
@@ -224,14 +130,14 @@ class CategoriesTile extends StatelessWidget {
                       child: kIsWeb
                           ? Image.network(
                               imgUrls,
-                              height: 50,
-                              width: 100,
+                              height: 52,
+                              width: 82,
                               fit: BoxFit.cover,
                             )
                           : CachedNetworkImage(
                               imageUrl: imgUrls,
-                              height: 50,
-                              width: 100,
+                              height: 52,
+                              width: 82,
                               fit: BoxFit.cover,
                             )),
                   SizedBox(
@@ -253,40 +159,20 @@ class CategoriesTile extends StatelessWidget {
             : Stack(
                 children: <Widget>[
                   ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
+                      // borderRadius: BorderRadius.circular(1),
                       child: kIsWeb
                           ? Image.network(
                               imgUrls,
-                              height: 50,
-                              width: 100,
+                              height: 52,
+                              width: 82,
                               fit: BoxFit.cover,
                             )
                           : CachedNetworkImage(
                               imageUrl: imgUrls,
-                              height: 50,
-                              width: 100,
+                              height: 52,
+                              width: 82,
                               fit: BoxFit.cover,
                             )),
-                  Container(
-                    height: 50,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.black26,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  Container(
-                      height: 50,
-                      width: 100,
-                      alignment: Alignment.center,
-                      child: Text(
-                        categorie ?? "Yo Yo",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Overpass'),
-                      ))
                 ],
               ),
       ),
